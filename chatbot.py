@@ -1,5 +1,4 @@
-import os
-
+import openai
 from openai import OpenAI
 import streamlit as st
 import base64
@@ -24,8 +23,8 @@ def set_logo_urls():
 
 
 @st.cache_resource
-def init_assistant(api_key):
-    client = OpenAI(api_key=api_key)
+def init_assistant():
+    client = OpenAI()
     assistant = client.beta.assistants.retrieve("asst_AjG7NaW5wpJruPAwNqIk5YqE")
     thread = client.beta.threads.create()
     return client, assistant, thread
@@ -72,8 +71,8 @@ if __name__ == '__main__':
     with open("style.css" ) as css:
         st.markdown(f'<style>{css.read()}</style>', unsafe_allow_html=True)
 
-    api_key = os.getenv('OPENAI_API_KEY')
-    client, assistant, thread = init_assistant(api_key)
+    openai.api_key = st.secrets["OPENAI_API_KEY"]
+    client, assistant, thread = init_assistant()
 
     if "messages" not in st.session_state:
         st.session_state.messages = []
