@@ -107,7 +107,11 @@ if __name__ == '__main__':
                 )
 
                 messages = list(client.beta.threads.messages.list(thread_id=thread.id, run_id=run.id))
-                message = messages[0].content[-1].text.value
+                message = messages[0].content[0].text.value
+                annotations = messages[0].content[0].text.annotations
+                for annotation in annotations:
+                    message = message.replace(annotation.text, "")
+
         spinner_placeholder.empty()
 
         with st.chat_message("assistant", avatar=assistant_logo_url):
