@@ -83,7 +83,7 @@ if __name__ == '__main__':
         with st.chat_message(message["role"], avatar=user_logo_url if message["role"] == "user" else assistant_logo_url):
             st.markdown(message["content"])
 
-    if prompt := st.chat_input("Message here"):
+    if prompt := st.chat_input("Ihre Nachricht"):
 
         st.session_state.messages.append({"role": "user", "content": prompt})
 
